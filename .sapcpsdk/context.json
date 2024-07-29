@@ -1,0 +1,16 @@
+{
+  "projectInfo": {
+    "projectName": "Wiz App",
+    "createdDate": "Friday, May 3, 2024 at 3:20:48 PM",
+    "regenerateProxyClassDate": ""
+  },
+  "cloudApplication": {
+    "cloudApplicationId": "com.sap.wizapp",
+    "destinations": [
+      {
+        "id": "com.sap.edm.sampleservice.v4"
+      }
+    ]
+  },
+  "msServerConfigurationName": "SAP Mobile Services Trial"
+}

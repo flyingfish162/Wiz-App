@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.sap.wizapp">
+    <application
+            android:name=".app.SAPWizardApplication"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/application_name"
+            android:supportsRtl="true"
+            android:theme="@style/AppTheme">
+		<provider
+			android:name="com.baidu.android.pushservice.PushInfoProvider"
+			android:authorities="com.sap.wizapp.bdpush"
+			android:writePermission="baidu.push.permission.WRITE_PUSHINFOPROVIDER.com.sap.wizapp"
+			android:protectionLevel = "signature"
+			android:exported="true" />
+
+		<receiver
+			android:name="com.baidu.android.pushservice.PushServiceReceiver"
+			android:exported="false">
+			<intent-filter>
+				<action android:name="com.baidu.android.pushservice.action.notification.SHOW" />
+				<!-- These 6 action will improve the speed and receiving rate -->
+				<action android:name="android.intent.action.BOOT_COMPLETED" />
+				<action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+				<action android:name="android.intent.action.MEDIA_MOUNTED" />
+				<action android:name="android.intent.action.USER_PRESENT" />
+				<action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+				<action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+			</intent-filter>
+		</receiver>
+		<receiver
+			android:name="com.baidu.android.pushservice.RegistrationReceiver"
+			android:exported="false">
+			<intent-filter>
+				<action android:name="com.baidu.android.pushservice.action.METHOD" />
+			</intent-filter>
+		</receiver>
+
+		<service
+			android:name="com.baidu.android.pushservice.PushService"
+			android:exported="false">
+			<intent-filter>
+				<action android:name="com.baidu.android.pushservice.action.PUSH_SERVICE" />
+			</intent-filter>
+		</service>
+
+		<receiver
+			android:name=".notification.BaiduReceiver"
+			android:exported="false">
+			<intent-filter>
+				<!-- receive push message -->
+				<action android:name="com.baidu.android.pushservice.action.MESSAGE" />
+				<!-- receive bind、setTags method callback result -->
+				<action android:name="com.baidu.android.pushservice.action.RECEIVE" />
+				<!-- receive notification event and content -->
+				<action android:name="com.baidu.android.pushservice.action.notification.CLICK" />
+			</intent-filter>
+		</receiver>
+	</application>
+	<uses-permission android:name="baidu.push.permission.WRITE_PUSHINFOPROVIDER.com.sap.wizapp" />
+	<permission
+		android:name="baidu.push.permission.WRITE_PUSHINFOPROVIDER.com.sap.wizapp"
+		android:protectionLevel="signature">
+	</permission>
+</manifest>
