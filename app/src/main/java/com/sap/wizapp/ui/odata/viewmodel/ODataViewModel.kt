@@ -365,7 +365,7 @@ abstract class ODataViewModel(
                 val navProp = parent.entityType.getProperty(navigationPropertyName)
                 val navValue = parent.getOptionalValue(navProp)
                 if(navProp.isEntityList || navValue == null ) action else null
-            }
+            } ?: action
         } ?: action
     }
 

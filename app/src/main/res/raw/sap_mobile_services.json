@@ -4,7 +4,7 @@
         "type": "basic.default",
         "requireOtp": false
   }],
-  "ServiceUrl" : "https://f34f47b5trial-dev-com-sap-wizapp.cfapps.us10-001.hana.ondemand.com/",
-  "appID": "com.sap.wizapp",
+  "ServiceUrl" : "https://mobile-tenant1-smpadmsh3-tenant-com-sap-android-wizard-sample.cfapps.sap.hana.ondemand.com/",
+  "appID": "com.sap.android.wizard.sample",
   "multiUser": false
 }

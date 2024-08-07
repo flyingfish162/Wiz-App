@@ -18,6 +18,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemContentType
 import androidx.paging.compose.itemKey
 import com.sap.cloud.android.odata.espmcontainer.Product
+import com.sap.cloud.android.odata.espmcontainer.ProductCategory
 import com.sap.wizapp.R
 import com.sap.wizapp.service.SAPServiceManager
 import com.sap.wizapp.ui.odata.*
@@ -51,6 +52,7 @@ val ProductEntitiesScreen:
 { navigateToHome, navigateUp, viewModel, isExpandedScreen ->
     val entities = viewModel.pagingDataState.value.collectAsLazyPagingItems()
     val uiState by viewModel.odataUIState.collectAsState()
+    val category = (viewModel.parent as? ProductCategory)?.categoryName
 
     val listState: LazyListState = rememberLazyListState()
 
@@ -122,6 +124,11 @@ val ProductEntitiesScreen:
                     count = entities.itemCount,
                 ) { index ->
                     val entity = entities[index] ?: return@items
+                    category?.also {
+                        if((entity as Product).category != it) {
+                            return@items
+                        }
+                    }
                     val selected = uiState.selectedItems.contains(entity)
                     val avatar = FioriAvatarConstruct(
                         hasBadge = false,

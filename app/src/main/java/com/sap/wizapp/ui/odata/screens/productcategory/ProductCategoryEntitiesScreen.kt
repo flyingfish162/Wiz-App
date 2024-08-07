@@ -108,7 +108,7 @@ val ProductCategoryEntitiesScreen:
             title = stringResource(id = R.string.product_categories_title),
             navigateUp = if (isInCreateOrUpdate.value) onNavigateUp else navigateUp,
             actionItems = actionItems,
-            floatingActionClick = viewModel.onFloatingAdd(),
+            floatingActionClick = null,
             floatingActionIcon = Icons.Filled.Add
         ),
         modifier = Modifier,

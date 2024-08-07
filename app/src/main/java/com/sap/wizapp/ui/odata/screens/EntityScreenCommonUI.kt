@@ -7,6 +7,7 @@ import androidx.annotation.StringRes
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.sp
 import androidx.compose.runtime.*
+import com.sap.cloud.android.odata.espmcontainer.ESPMContainerMetadata
 import com.sap.wizapp.R
 import com.sap.wizapp.ui.AlertDialogComponent
 import com.sap.wizapp.ui.odata.ActionItem
@@ -65,7 +66,7 @@ fun getSelectedItemActionsList(
             ActionItem(
                 nameRes = R.string.menu_home,
                 iconRes = R.drawable.ic_sap_icon_home,
-                overflowMode = OverflowMode.IF_NECESSARY,
+                overflowMode = if(viewModel.entityType == ESPMContainerMetadata.EntityTypes.productCategory) OverflowMode.NOT_SHOWN else OverflowMode.IF_NECESSARY,
                 doAction = navigateToHome
             ), ActionItem(
                 nameRes = R.string.menu_refresh,
