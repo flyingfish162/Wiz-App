@@ -64,6 +64,11 @@ fun getSelectedItemActionsList(
     return when (uiState.value.selectedItems.size) {
         0 -> listOf(
             ActionItem(
+                nameRes = R.string.menu_search,
+                iconRes = if (viewModel.showSearchInput.collectAsState().value) R.drawable.ic_sap_icon_decline else R.drawable.ic_search_icon,
+                overflowMode = if(viewModel.entityType == ESPMContainerMetadata.EntityTypes.productCategory) OverflowMode.IF_NECESSARY else OverflowMode.NOT_SHOWN,
+                doAction = if (viewModel.showSearchInput.collectAsState().value) viewModel::hideSearchInput else viewModel::showSearchInput
+            ), ActionItem(
                 nameRes = R.string.menu_home,
                 iconRes = R.drawable.ic_sap_icon_home,
                 overflowMode = if(viewModel.entityType == ESPMContainerMetadata.EntityTypes.productCategory) OverflowMode.NOT_SHOWN else OverflowMode.IF_NECESSARY,

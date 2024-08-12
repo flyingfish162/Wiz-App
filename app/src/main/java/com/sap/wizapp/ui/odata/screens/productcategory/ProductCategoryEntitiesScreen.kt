@@ -50,6 +50,8 @@ val ProductCategoryEntitiesScreen:
 { navigateToHome, navigateUp, viewModel, isExpandedScreen ->
     val entities = viewModel.pagingDataState.value.collectAsLazyPagingItems()
     val uiState by viewModel.odataUIState.collectAsState()
+    val showSearchInput = viewModel.showSearchInput.collectAsState().value
+    val searchQuery = viewModel.searchQuery.collectAsState().value
 
     val listState: LazyListState = rememberLazyListState()
 
@@ -122,6 +124,13 @@ val ProductCategoryEntitiesScreen:
                     count = entities.itemCount,
                 ) { index ->
                     val entity = entities[index] ?: return@items
+                    if (showSearchInput) {
+                        (entity as ProductCategory).categoryName?.let {
+                            if (!it.lowercase().contains(searchQuery.lowercase())) {
+                                return@items
+                            }
+                        }
+                    }
                     val selected = uiState.selectedItems.contains(entity)
                     val avatar = FioriAvatarConstruct(
                         hasBadge = false,

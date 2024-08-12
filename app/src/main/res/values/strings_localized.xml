@@ -53,6 +53,9 @@
     <!-- XMSG: Error message, can be presented in a Toast or Dialog -->
     <string name="entity_download_error">Error occurred during background operation.</string>
 
+    <!-- XMIT: Search menu item -->
+    <string name="menu_search">Search</string>
+
     <!-- XMIT: Refresh menu item -->
     <string name="menu_refresh">Refresh</string>
 

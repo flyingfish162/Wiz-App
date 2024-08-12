@@ -9,9 +9,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.sap.wizapp.ui.odata.ActionItem
 import com.sap.wizapp.ui.odata.ActionMenu
@@ -94,7 +98,9 @@ fun OperationScreen(
                 modifier = modifier,
                 navigateUp = screenSettings.navigateUp,
                 actionItems = screenSettings.actionItems,
-                actionEnabled = !operationUiState.value.inProgress
+                actionEnabled = !operationUiState.value.inProgress,
+                showSearchInput = viewModel.showSearchInput.collectAsState().value,
+                onSearchQueryChanged = viewModel::onSearchQueryChanged
             )
         },
         floatingActionButton = floatingAction(
@@ -135,11 +141,39 @@ fun ODataAppBar(
     modifier: Modifier = Modifier,
     navigateUp: (() -> Unit)?,
     actionItems: List<ActionItem>,
-    actionEnabled: Boolean = true
+    actionEnabled: Boolean = true,
+    showSearchInput: Boolean,
+    onSearchQueryChanged: (String) -> Unit
 ) {
     Column(modifier = Modifier) {
         TopAppBar(
-            title = { Text(title) },
+            title = {
+                if (showSearchInput) {
+                    //import androidx.compose.runtime.getValue
+                    //import androidx.compose.runtime.mutableStateOf
+                    //import androidx.compose.runtime.setValue
+                    var query by remember { mutableStateOf("") }
+                    OutlinedTextField(
+                        singleLine = true,
+                        value = query,
+                        onValueChange = {
+                            query = it
+                            onSearchQueryChanged(it)
+                        },
+                        label = { Text("Search") },
+                        colors = OutlinedTextFieldDefaults.colors(
+                            //import androidx.compose.ui.graphics.Color
+                            focusedBorderColor = Color.Transparent,
+                            unfocusedBorderColor = Color.Transparent,
+                            cursorColor = Color.Gray,
+                            errorCursorColor = Color.Red
+                        ),
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                } else {
+                    Text(title)
+                }
+            },
             modifier = modifier,
             navigationIcon = {
                 navigateUp?.also {
